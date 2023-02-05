@@ -1,0 +1,70 @@
+name: "schedule check and build"
+on:
+  schedule:
+    - cron: "0 6 3,18 * *"
+#  push:
+#    branches: [ buildtester ]
+#  pull_request:
+#    branches: [ master ]
+jobs:
+  first:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+
+#    - name: Set ENV variables
+#      run: |
+#        echo "REMOTE_COMMIT_HASH=$(git -C remote rev-parse --short HEAD)" >> $GITHUB_ENV
+#        echo "SAVED_COMMIT_HASH=$(cat main/dependencies/console-client-commit)" >> $GITHUB_ENV
+#        echo "REMOTE_VERSION=$(grep -rn 'remote/pCloudCC/main.cpp' -e 'version = "' | grep -Po 'version = "\K[^"]*')" >> $GITHUB_ENV
+#    - name: echo Remote
+#      run: echo ${{env.REMOTE_COMMIT_HASH}}
+#    - name: echo Saved
+#      run: echo ${{env.SAVED_COMMIT_HASH}}
+#    - name: echo Version
+#      run: echo ${{env.REMOTE_VERSION}}
+#    - name: Exit if same hash
+#      if: ${{ env.REMOTE_COMMIT_HASH == env.SAVED_COMMIT_HASH }}
+#      run: echo "The same hash - it's time to shine :)"
+#    - name: Commit if not the same
+#      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
+#      run: echo "${{ env.REMOTE_COMMIT_HASH }}" > main/dependencies/console-client-commit
+
+
+# Build the new way (Docker) 
+    - name: Set up QEMU
+#      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
+      uses: docker/setup-qemu-action@v2
+    - name: Set up Docker Buildx
+#      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
+      uses: docker/setup-buildx-action@v2
+    - name: Login to DockerHub
+#      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
+      uses: docker/login-action@v2
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push
+#      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
+      uses: docker/build-push-action@v3
+      with:
+        push: true
+        platforms: linux/amd64
+        #,linux/arm/v7,linux/arm64
+        tags: dersni/docker-kasm-ubuntu-dektop-edit:
+        #${{env.REMOTE_VERSION}}.${{ github.run_number }}-${{env.REMOTE_COMMIT_HASH}}, dersni/docker-kasm-ubuntu-dektop-edit:latest
+        context: docker-ubuntu-dektop-edit
+# If all done, commit changes
+    - name: Commit changes an push it to remote
+#      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
+      uses: actions-x/commit@v6
+      with:
+        email: 41898282+github-actions[bot]@users.noreply.github.com
+        name: GitHub Actions
+        branch: master
+        files: dependencies/console-client-commit
+        repository: https://github.com/DjSni/docker-image-pCloud
+        token: ${{ secrets.GITHUB_TOKEN }}
+        force: false
+        directory: main/
