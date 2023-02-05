@@ -74,6 +74,10 @@ COPY ./src/ubuntu/install/vlc/custom_startup.sh $STARTUPDIR/custom_startup.sh
 RUN chmod +x $STARTUPDIR/custom_startup.sh
 RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
+### Install 1Password
+COPY /src/ubuntu/install/vlc $INST_SCRIPTS/1password/
+RUN bash $INST_SCRIPTS/vlc/install_1password.sh  && rm -rf $INST_SCRIPTS/1password/
+
 #ADD ./src/common/scripts $STARTUPDIR
 RUN $STARTUPDIR/set_user_permission.sh $HOME
 
