@@ -15,7 +15,7 @@ ENV INST_SCRIPTS $STARTUPDIR/install
 
 
 ### Install Stuff
-RUN apt-get update && apt-get install -y vlc git tmux nano zip xdotool
+RUN apt-get update && apt-get install -y vlc git tmux nano zip xdotool && apt -y upgrade
 
 ### Install Brave
 COPY ./src/ubuntu/install/brave $INST_SCRIPTS/brave/
@@ -37,13 +37,9 @@ RUN bash $INST_SCRIPTS/signal/install_signal.sh  && rm -rf $INST_SCRIPTS/signal/
 COPY ./src/ubuntu/install/obs $INST_SCRIPTS/obs/
 RUN bash $INST_SCRIPTS/obs/install_obs.sh  && rm -rf $INST_SCRIPTS/obs/
 
-### Install Telegram
-COPY ./src/ubuntu/install/telegram $INST_SCRIPTS/telegram/
-RUN bash $INST_SCRIPTS/telegram/install_telegram.sh  && rm -rf $INST_SCRIPTS/telegram/
-
 ### Install Thunderbird
-COPY ./src/ubuntu/install/thunderbird $INST_SCRIPTS/thunderbird/
-RUN bash $INST_SCRIPTS/thunderbird/install_thunderbird.sh  && rm -rf $INST_SCRIPTS/thunderbird/
+#COPY ./src/ubuntu/install/thunderbird $INST_SCRIPTS/thunderbird/
+#RUN bash $INST_SCRIPTS/thunderbird/install_thunderbird.sh  && rm -rf $INST_SCRIPTS/thunderbird/
 
 # Install Gamepad Testing Utils
 #COPY ./src/ubuntu/install/gamepad_utils $INST_SCRIPTS/gamepad_utils/
@@ -53,7 +49,7 @@ RUN bash $INST_SCRIPTS/thunderbird/install_thunderbird.sh  && rm -rf $INST_SCRIP
 COPY ./src/ubuntu/install/wine $INST_SCRIPTS/wine/
 RUN bash $INST_SCRIPTS/wine/install_wine.sh  && rm -rf $INST_SCRIPTS/wine/
 
-### Install Stream
+### Install Steam
 #COPY ./src/ubuntu/install/steam $INST_SCRIPTS/steam/
 #RUN bash $INST_SCRIPTS/steam/install_steam.sh  && rm -rf $INST_SCRIPTS/steam/
 #COPY ./src/ubuntu/install/steam/custom_startup.sh $STARTUPDIR/custom_startup.sh
@@ -75,8 +71,8 @@ RUN chmod +x $STARTUPDIR/custom_startup.sh
 RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
 ### Install 1Password
-COPY /src/ubuntu/install/vlc $INST_SCRIPTS/1password/
-RUN bash $INST_SCRIPTS/vlc/install_1password.sh  && rm -rf $INST_SCRIPTS/1password/
+COPY /src/ubuntu/install/1password $INST_SCRIPTS/1password/
+RUN bash $INST_SCRIPTS/1password/install_1password.sh  && rm -rf $INST_SCRIPTS/1password/
 
 #ADD ./src/common/scripts $STARTUPDIR
 RUN $STARTUPDIR/set_user_permission.sh $HOME
