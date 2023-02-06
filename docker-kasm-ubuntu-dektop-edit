@@ -46,8 +46,8 @@ COPY ./src/ubuntu/install/thunderbird $INST_SCRIPTS/thunderbird/
 RUN bash $INST_SCRIPTS/thunderbird/install_thunderbird.sh  && rm -rf $INST_SCRIPTS/thunderbird/
 
 # Install Gamepad Testing Utils
-COPY ./src/ubuntu/install/gamepad_utils $INST_SCRIPTS/gamepad_utils/
-RUN bash $INST_SCRIPTS/gamepad_utils/install_gamepad_utils.sh  && rm -rf $INST_SCRIPTS/gamepad_utils/
+#COPY ./src/ubuntu/install/gamepad_utils $INST_SCRIPTS/gamepad_utils/
+#RUN bash $INST_SCRIPTS/gamepad_utils/install_gamepad_utils.sh  && rm -rf $INST_SCRIPTS/gamepad_utils/
 
 ### Install WINE
 COPY ./src/ubuntu/install/wine $INST_SCRIPTS/wine/
