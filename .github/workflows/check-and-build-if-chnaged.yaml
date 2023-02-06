@@ -1,29 +1,30 @@
 name: "schedule check and build"
 on:
   schedule:
-    - cron: "0 6 3,18 * *"
+    - cron: "30 * * * *"
+    #- cron: "0 6 3,18 * *"
 #  push:
-#    branches: [ buildtester ]
-#  pull_request:
-#    branches: [ master ]
+#    branches: [ main ]
+  pull_request:
+    branches: [ main ]
 jobs:
   first:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
       uses: actions/checkout@v3
+    - name: Set ENV variables
+      run: |
+        echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+        echo "LATST_COMMIT_HASH=$(cat dependencies/last-commit)" >> $GITHUB_ENV
+        echo "VERSION=1.12.0" >> $GITHUB_ENV
+    - name: echo Remote
+      run: echo ${{env.COMMIT_HASH}}
+    - name: echo Last
+      run: echo ${{env.LAST_COMMIT_HASH}}
+    - name: echo Version
+      run: echo ${{env.VERSION}}
 
-#    - name: Set ENV variables
-#      run: |
-#        echo "REMOTE_COMMIT_HASH=$(git -C remote rev-parse --short HEAD)" >> $GITHUB_ENV
-#        echo "SAVED_COMMIT_HASH=$(cat main/dependencies/console-client-commit)" >> $GITHUB_ENV
-#        echo "REMOTE_VERSION=$(grep -rn 'remote/pCloudCC/main.cpp' -e 'version = "' | grep -Po 'version = "\K[^"]*')" >> $GITHUB_ENV
-#    - name: echo Remote
-#      run: echo ${{env.REMOTE_COMMIT_HASH}}
-#    - name: echo Saved
-#      run: echo ${{env.SAVED_COMMIT_HASH}}
-#    - name: echo Version
-#      run: echo ${{env.REMOTE_VERSION}}
 #    - name: Exit if same hash
 #      if: ${{ env.REMOTE_COMMIT_HASH == env.SAVED_COMMIT_HASH }}
 #      run: echo "The same hash - it's time to shine :)"
@@ -51,10 +52,10 @@ jobs:
       with:
         push: true
         platforms: linux/amd64
-        #,linux/arm/v7,linux/arm64
-        tags: dersni/docker-kasm-ubuntu-dektop-edit:
-        #${{env.REMOTE_VERSION}}.${{ github.run_number }}-${{env.REMOTE_COMMIT_HASH}}, dersni/docker-kasm-ubuntu-dektop-edit:latest
-        context: docker-ubuntu-dektop-edit
+#        #,linux/arm/v7,linux/arm64
+        tags: dersni/docker-kasm-ubuntu-dektop-edit:${{env.VERSION}}.${{ github.run_number }}-${{env.COMMIT_HASH}},dersni/docker-kasm-ubuntu-dektop-edit:latest
+        context: .
+        file: docker-kasm-ubuntu-dektop-edit
 # If all done, commit changes
     - name: Commit changes an push it to remote
 #      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
@@ -63,8 +64,8 @@ jobs:
         email: 41898282+github-actions[bot]@users.noreply.github.com
         name: GitHub Actions
         branch: master
-        files: dependencies/console-client-commit
-        repository: https://github.com/DjSni/docker-image-pCloud
+        files: dependencies/last-commit
+        repository: https://github.com/DjSni/docker-for-kasm
         token: ${{ secrets.GITHUB_TOKEN }}
         force: false
-        directory: main/
+#        directory: main/
