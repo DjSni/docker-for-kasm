@@ -1,8 +1,7 @@
 name: "schedule check and build"
 on:
   schedule:
-    - cron: "30 * * * *"
-    #- cron: "0 6 3,18 * *"
+    - cron: "45 21 * * *" # - cron: "0 6 3,18 * *"
 #  push:
 #    branches: [ main ]
   pull_request:
