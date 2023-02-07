@@ -1,7 +1,15 @@
 name: "schedule check and build"
 on:
+  workflow_dispatch:
+    inputs:
+      logLevel:
+        description: 'Log level'     
+        required: true
+        default: 'warning'
+      tags:
+        description: 'Test the image build'
   schedule:
-    - cron: "0 2 * * *" # - cron: "0 6 3,18 * *"
+    - cron: "20 5 3,18 * *"
 #  push:
 #    branches: [ main ]
   pull_request:
