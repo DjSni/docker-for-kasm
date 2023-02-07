@@ -59,16 +59,16 @@ RUN bash $INST_SCRIPTS/wine/install_wine.sh  && rm -rf $INST_SCRIPTS/wine/
 ### Install Filezilla
 COPY ./src/ubuntu/install/filezilla $INST_SCRIPTS/filezilla/
 RUN bash $INST_SCRIPTS/filezilla/install_filezilla.sh  && rm -rf $INST_SCRIPTS/filezilla/
-COPY ./src/ubuntu/install/filezilla/custom_startup.sh $STARTUPDIR/custom_startup.sh
-RUN chmod +x $STARTUPDIR/custom_startup.sh
-RUN chmod 755 $STARTUPDIR/custom_startup.sh
+#COPY ./src/ubuntu/install/filezilla/custom_startup.sh $STARTUPDIR/custom_startup.sh
+#RUN chmod +x $STARTUPDIR/custom_startup.sh
+#RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
 ### Install VLC
 COPY ./src/ubuntu/install/vlc $INST_SCRIPTS/vlc/
 RUN bash $INST_SCRIPTS/vlc/install_vlc.sh  && rm -rf $INST_SCRIPTS/vlc/
-COPY ./src/ubuntu/install/vlc/custom_startup.sh $STARTUPDIR/custom_startup.sh
-RUN chmod +x $STARTUPDIR/custom_startup.sh
-RUN chmod 755 $STARTUPDIR/custom_startup.sh
+#COPY ./src/ubuntu/install/vlc/custom_startup.sh $STARTUPDIR/custom_startup.sh
+#RUN chmod +x $STARTUPDIR/custom_startup.sh
+#RUN chmod 755 $STARTUPDIR/custom_startup.sh
 
 ### Install 1Password
 COPY /src/ubuntu/install/1password $INST_SCRIPTS/1password/
