@@ -31,6 +31,8 @@ jobs:
       run: echo ${{env.LAST_COMMIT_HASH}}
     - name: echo Version
       run: echo ${{env.VERSION}}
+    - name: Update last commit
+      run: echo "${{ env.LATST_COMMIT_HASH }}" > dependencies/last-commit
 
 #    - name: Exit if same hash
 #      if: ${{ env.REMOTE_COMMIT_HASH == env.SAVED_COMMIT_HASH }}
@@ -38,7 +40,6 @@ jobs:
 #    - name: Commit if not the same
 #      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
 #      run: echo "${{ env.REMOTE_COMMIT_HASH }}" > main/dependencies/console-client-commit
-
 
 # Build the new way (Docker) 
     - name: Set up QEMU
