@@ -63,7 +63,7 @@ jobs:
 #        #,linux/arm/v7,linux/arm64
         tags: dersni/docker-kasm-ubuntu-dektop-edit:${{env.VERSION}}.${{ github.run_number }}-${{env.COMMIT_HASH}},dersni/docker-kasm-ubuntu-dektop-edit:latest
         context: .
-        file: docker-kasm-ubuntu-dektop-edit
+        file: dockerfile-kasm-ubuntu-dektop-edit
 # If all done, commit changes
     - name: Commit changes an push it to remote
 #      if: ${{ env.REMOTE_COMMIT_HASH != env.SAVED_COMMIT_HASH }}
