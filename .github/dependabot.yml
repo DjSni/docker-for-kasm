@@ -8,6 +8,7 @@ updates:
   # Configuration for Dockerfile
   - package-ecosystem: "docker"
     directory: "/"
+    file: "docker-kasm-ubuntu-dektop-edit"
     schedule:
       interval: "weekly"
     commit-message:
