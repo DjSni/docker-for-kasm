@@ -1,6 +1,10 @@
 ARG BASE_TAG="develop"
 ARG BASE_IMAGE="core-ubuntu-jammy"
+
 FROM kasmweb/$BASE_IMAGE:$BASE_TAG
+
+LABEL org.opencontainers.image.source="https://github.com/DjSni/docker-for-kasm"
+LABEL org.opencontainers.image.description="Test 123"
 
 USER root
 
