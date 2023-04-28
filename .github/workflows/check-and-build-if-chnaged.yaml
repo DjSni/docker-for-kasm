@@ -32,7 +32,7 @@ jobs:
     - name: echo Version
       run: echo ${{env.VERSION}}
     - name: Update last commit
-      run: echo "${{ env.LATST_COMMIT_HASH }}" > dependencies/last-commit
+      run: echo "${{ env.COMMIT_HASH }}" > dependencies/last-commit
 
 #    - name: Exit if same hash
 #      if: ${{ env.REMOTE_COMMIT_HASH == env.SAVED_COMMIT_HASH }}
