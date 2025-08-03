@@ -24,7 +24,7 @@ jobs:
       run: |
         echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
         echo "LATST_COMMIT_HASH=$(cat dependencies/last-commit)" >> $GITHUB_ENV
-        echo "VERSION=1.13.1" >> $GITHUB_ENV
+        echo "VERSION=1.16.1" >> $GITHUB_ENV
     - name: echo Remote
       run: echo ${{env.COMMIT_HASH}}
     - name: echo Last
